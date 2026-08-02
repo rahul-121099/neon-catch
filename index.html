@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Neon Catch — a fast browser arcade game. Catch falling orbs, dodge the voids."
+    />
+    <title>Neon Catch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-bar">
+        <h1 class="brand">Neon Catch</h1>
+        <div class="stats" aria-live="polite">
+          <div class="stat">
+            <span class="stat-label">Score</span>
+            <span id="score" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Best</span>
+            <span id="best" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Lives</span>
+            <span id="lives" class="stat-value lives">●●●</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="stage-wrap">
+        <canvas id="game" width="480" height="640" aria-label="Neon Catch game canvas"></canvas>
+
+        <section id="overlay" class="overlay" data-screen="start">
+          <div class="overlay-panel">
+            <p class="eyebrow">Arcade Mini-Game</p>
+            <h2 id="overlay-title" class="overlay-title">Neon Catch</h2>
+            <p id="overlay-copy" class="overlay-copy">
+              Slide under glowing orbs. Avoid the dark voids. How long can you last?
+            </p>
+            <div class="actions">
+              <button id="primary-btn" type="button" class="btn btn-primary">Play</button>
+            </div>
+            <p class="controls-hint">
+              Move with <kbd>←</kbd> <kbd>→</kbd> or drag / touch the paddle
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>HTML · CSS · JS · no build step</p>
+      </footer>
+    </div>
+
+    <script src="js/game.js" defer></script>
+  </body>
+</html>

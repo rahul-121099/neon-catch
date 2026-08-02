@@ -1,0 +1,14 @@
+# Deploy the static game to GitLab Pages from main.
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp index.html public/
+    - cp -r css js public/
+    - cp -r docs public/docs
+    - cp README.md LICENSE public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"

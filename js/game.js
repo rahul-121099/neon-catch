@@ -11,8 +11,8 @@
   const overlayCopy = document.getElementById("overlay-copy");
   const primaryBtn = document.getElementById("primary-btn");
 
-  const W = canvas.width;
-  const H = canvas.height;
+  const W = 480;
+  const H = 640;
   const BEST_KEY = "neon-catch-best";
 
   const state = {
@@ -26,6 +26,7 @@
     particles: [],
     keys: { left: false, right: false },
     pointerX: null,
+    pointerActive: false,
   };
 
   const paddle = {
@@ -36,7 +37,21 @@
     speed: 420,
   };
 
+  function setupCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
   bestEl.textContent = String(state.best);
+  setupCanvas();
+
+  function setPlayingUi(isPlaying) {
+    document.body.classList.toggle("is-playing", isPlaying);
+  }
 
   function resetGame() {
     state.score = 0;
@@ -70,11 +85,15 @@
   function startGame() {
     resetGame();
     state.running = true;
+    setPlayingUi(true);
     hideOverlay();
   }
 
   function endGame() {
     state.running = false;
+    state.pointerActive = false;
+    state.pointerX = null;
+    setPlayingUi(false);
     if (state.score > state.best) {
       state.best = state.score;
       localStorage.setItem(BEST_KEY, String(state.best));
@@ -279,10 +298,19 @@
     requestAnimationFrame(loop);
   }
 
+  function clientXFromEvent(event) {
+    if (typeof event.clientX === "number") return event.clientX;
+    if (event.touches && event.touches[0]) return event.touches[0].clientX;
+    if (event.changedTouches && event.changedTouches[0]) return event.changedTouches[0].clientX;
+    return null;
+  }
+
   function setPointerFromEvent(event) {
+    const clientX = clientXFromEvent(event);
+    if (clientX === null) return;
     const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0) return;
     const scaleX = W / rect.width;
-    const clientX = event.touches ? event.touches[0].clientX : event.clientX;
     state.pointerX = (clientX - rect.left) * scaleX;
   }
 
@@ -301,17 +329,51 @@
   });
 
   canvas.addEventListener("pointerdown", (e) => {
-    canvas.setPointerCapture(e.pointerId);
+    e.preventDefault();
+    state.pointerActive = true;
+    try {
+      canvas.setPointerCapture(e.pointerId);
+    } catch (_) {
+      /* ignore unsupported capture */
+    }
     setPointerFromEvent(e);
   });
+
   canvas.addEventListener("pointermove", (e) => {
-    if (e.buttons || e.pointerType === "touch") setPointerFromEvent(e);
+    if (!state.pointerActive && !(e.buttons & 1)) return;
+    e.preventDefault();
+    setPointerFromEvent(e);
   });
-  canvas.addEventListener("pointerup", () => {
+
+  function clearPointer(e) {
+    if (e) e.preventDefault();
+    state.pointerActive = false;
+    state.pointerX = null;
+  }
+
+  canvas.addEventListener("pointerup", clearPointer);
+  canvas.addEventListener("pointercancel", clearPointer);
+  canvas.addEventListener("lostpointercapture", () => {
+    state.pointerActive = false;
     state.pointerX = null;
   });
-  canvas.addEventListener("pointercancel", () => {
-    state.pointerX = null;
+
+  // Block page scroll / pull-to-refresh while dragging on the stage.
+  canvas.addEventListener(
+    "touchmove",
+    (e) => {
+      e.preventDefault();
+      if (state.pointerActive && e.touches[0]) setPointerFromEvent(e.touches[0]);
+    },
+    { passive: false }
+  );
+
+  window.addEventListener("resize", () => {
+    setupCanvas();
+  });
+
+  window.addEventListener("orientationchange", () => {
+    setupCanvas();
   });
 
   primaryBtn.addEventListener("click", startGame);

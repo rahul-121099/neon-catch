@@ -52,7 +52,7 @@ neon-catch/
 
 - [Game design](docs/GAME_DESIGN.md)
 - [Architecture](docs/ARCHITECTURE.md)
-- [Setup & GitLab](docs/SETUP.md)
+- [Setup & GitHub](docs/SETUP.md)
 - [Contributing](docs/CONTRIBUTING.md)
 
 ## License

@@ -5,19 +5,19 @@
 - A modern browser (Chrome, Firefox, Safari, Edge)
 - Git
 - Optional: a static file server for local testing
-- GitLab account (to host the remote)
+- GitHub account (to host the remote)
 
 ## Clone
 
 ```bash
-git clone git@gitlab.com:<your-username>/neon-catch.git
+git clone git@github.com:<your-username>/neon-catch.git
 cd neon-catch
 ```
 
 Or HTTPS:
 
 ```bash
-git clone https://gitlab.com/<your-username>/neon-catch.git
+git clone https://github.com/<your-username>/neon-catch.git
 cd neon-catch
 ```
 
@@ -29,38 +29,34 @@ Open `index.html` directly, or:
 python3 -m http.server 8080
 ```
 
-## GitLab remote
+## GitHub remote
 
-### Option A — GitLab CLI (`glab`)
+### Option A — GitHub CLI (`gh`)
 
 ```bash
 # Install (macOS with Homebrew)
-brew install glab
+brew install gh
 
-glab auth login
-glab repo create neon-catch --public --description "Neon Catch — HTML/CSS/JS arcade mini-game" --source=. --remote=origin --push
+gh auth login
+gh repo create neon-catch --public --source=. --remote=origin --push --description "Neon Catch — HTML/CSS/JS arcade mini-game"
 ```
 
-### Option B — GitLab web UI
+### Option B — GitHub web UI
 
-1. Create a new blank project named `neon-catch` on GitLab.
+1. Create a new blank repository named `neon-catch` on GitHub (do not add a README).
 2. Add the remote and push:
 
 ```bash
-git remote add origin git@gitlab.com:<your-username>/neon-catch.git
+git remote add origin git@github.com:<your-username>/neon-catch.git
 git push -u origin main
 ```
 
-### Option C — GitLab API
+## GitHub Pages
 
-```bash
-curl --header "PRIVATE-TOKEN: <your-token>" \
-  --data "name=neon-catch&visibility=public&description=Neon Catch HTML/CSS/JS game" \
-  "https://gitlab.com/api/v4/projects"
-```
+This repo includes `.github/workflows/pages.yml`, which deploys the site from `main`.
 
-Then add `origin` from the returned `http_url_to_repo` / `ssh_url_to_repo` and push.
+After the first successful workflow run:
 
-## Project pages (optional)
-
-In GitLab: **Settings → Pages**. For this static site, enabling Pages with the default config can serve `index.html` from the repo root on many setups, or use GitLab CI with a simple pages job (see `CONTRIBUTING.md` if you add `.gitlab-ci.yml`).
+1. Open the repo on GitHub → **Settings → Pages**
+2. Confirm **Source** is **GitHub Actions**
+3. Visit the Pages URL shown in the workflow summary

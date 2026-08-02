@@ -4,11 +4,11 @@ Thanks for helping improve Neon Catch.
 
 ## Workflow
 
-1. Fork the project on GitLab (or create a branch if you have push access).
+1. Fork the project on GitHub (or create a branch if you have push access).
 2. Create a feature branch: `git checkout -b feature/short-name`
-3. Make focused changes (prefer small MRs).
+3. Make focused changes (prefer small PRs).
 4. Test in a desktop browser and, when possible, on a phone/touch device.
-5. Open a merge request with a short summary of *why* the change exists.
+5. Open a pull request with a short summary of *why* the change exists.
 
 ## Coding guidelines
 
@@ -17,7 +17,7 @@ Thanks for helping improve Neon Catch.
 - Prefer readable game logic over micro-optimizations.
 - Update docs in `docs/` when behavior or setup changes.
 
-## Suggested checks before MR
+## Suggested checks before PR
 
 - [ ] Game starts from the overlay
 - [ ] Keyboard and pointer controls both move the paddle
@@ -26,20 +26,6 @@ Thanks for helping improve Neon Catch.
 - [ ] Best score persists across refresh
 - [ ] Layout remains usable on a narrow phone viewport
 
-## Optional GitLab CI (Pages)
+## GitHub Pages
 
-If you want automatic Pages deploys, add `.gitlab-ci.yml`:
-
-```yaml
-pages:
-  stage: deploy
-  script:
-    - mkdir -p public
-    - cp index.html public/
-    - cp -r css js public/
-  artifacts:
-    paths:
-      - public
-  only:
-    - main
-```
+Deployment is handled by `.github/workflows/pages.yml` on pushes to `main`. No extra Pages config file is required beyond enabling **GitHub Actions** as the Pages source in repo settings.

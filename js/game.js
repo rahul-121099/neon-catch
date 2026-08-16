@@ -14,11 +14,32 @@
   const W = 480;
   const H = 640;
   const BEST_KEY = "neon-catch-best";
+  const BEST_MAX = 999999999;
+
+  function readBestScore() {
+    try {
+      const raw = localStorage.getItem(BEST_KEY);
+      if (raw == null || raw === "") return 0;
+      if (!/^\d{1,9}$/.test(raw)) return 0;
+      return Number(raw);
+    } catch {
+      return 0;
+    }
+  }
+
+  function writeBestScore(value) {
+    if (!Number.isInteger(value) || value < 0 || value > BEST_MAX) return;
+    try {
+      localStorage.setItem(BEST_KEY, String(value));
+    } catch {
+      /* private mode, disabled storage, or quota */
+    }
+  }
 
   const state = {
     running: false,
     score: 0,
-    best: Number(localStorage.getItem(BEST_KEY) || 0),
+    best: readBestScore(),
     lives: 3,
     time: 0,
     spawnTimer: 0,
@@ -96,7 +117,7 @@
     setPlayingUi(false);
     if (state.score > state.best) {
       state.best = state.score;
-      localStorage.setItem(BEST_KEY, String(state.best));
+      writeBestScore(state.best);
     }
     updateHud();
     showOverlay(

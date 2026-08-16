@@ -1,9 +1,17 @@
 node_modules/
 .DS_Store
+Thumbs.db
 *.log
 .idea/
 .vscode/
 dist/
+.cache/
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets/

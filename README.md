@@ -45,11 +45,14 @@ neon-catch/
 │   ├── GAME_DESIGN.md
 │   ├── SETUP.md
 │   └── CONTRIBUTING.md
+├── scripts/publish-wiki.sh
 ├── LICENSE
 └── README.md
 ```
 
 ## Docs
+
+Source of truth lives in this repo. The same pages are published to the [GitHub wiki](https://github.com/rahul-121099/neon-catch/wiki).
 
 - [Game design](docs/GAME_DESIGN.md)
 - [Architecture](docs/ARCHITECTURE.md)

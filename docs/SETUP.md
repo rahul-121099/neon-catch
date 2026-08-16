@@ -51,6 +51,20 @@ git remote add origin git@github.com:<your-username>/neon-catch.git
 git push -u origin main
 ```
 
+## GitHub wiki
+
+The wiki at `https://github.com/<your-username>/neon-catch/wiki` is generated from `README.md` and `docs/*.md`. After the first publish (or any later docs change on `main`), the [Sync GitHub Wiki](../.github/workflows/wiki.yml) workflow updates those pages.
+
+GitHub does not create the wiki git remote until one page exists. If clone/push fails with "repository not found", open the wiki in the browser, click **Create the first page**, save a placeholder, then publish again.
+
+To publish locally:
+
+```bash
+./scripts/publish-wiki.sh
+```
+
+If the Actions sync cannot push (GitHub's default `GITHUB_TOKEN` sometimes cannot write the wiki remote), add a `repo`-scoped personal access token as the `WIKI_TOKEN` repository secret.
+
 ## GitHub Pages
 
 This repo includes `.github/workflows/pages.yml`, which deploys the site from `main`.

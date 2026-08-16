@@ -39,6 +39,7 @@ neon-catch/
 ├── index.html          # Game shell / UI
 ├── css/style.css       # Layout and theme
 ├── js/game.js          # Game loop, input, collision
+├── fonts/              # Self-hosted Orbitron + Space Grotesk (OFL)
 ├── docs/
 │   ├── ARCHITECTURE.md
 │   ├── GAME_DESIGN.md

@@ -15,7 +15,7 @@ Thanks for helping improve Neon Catch.
 - Keep the stack plain HTML/CSS/JS unless there is a strong reason to add tooling.
 - Match existing naming and formatting in `js/game.js` and `css/style.css`.
 - Prefer readable game logic over micro-optimizations.
-- Update docs in `docs/` when behavior or setup changes.
+- Update docs in `docs/` (and `README.md` when needed) when behavior or setup changes. The GitHub wiki is generated from those files on push to `main`.
 
 ## Suggested checks before PR
 
